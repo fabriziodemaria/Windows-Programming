@@ -1,0 +1,114 @@
+System and Device Programming
+Laboratory Week 11
+
+Laboratory target:
+- manipulate file systems
+- write recursive programs
+- run threads with proper synchronization when necessary
+
+
+
+Note
+----
+
+All students are requested to *up-load* on the class "portal" web page
+the solution of Exercise 04.
+Each student should submit a *single* C file with name
+s<registerNumber>.cpp"
+(e.g., s123456.cpp).
+Comments and notes should just duplicate the name of the file.
+Deadline: May, Monday the 26th, 12.00 p.m.
+
+
+
+Exercise 01
+-----------
+
+Copy a directory tree.
+
+A C program is run with two parameters
+name1 name2
+where name1 and name2 are C strings which indicates relative
+or absolute paths of two directory trees.
+
+The program has to copy the entire name1 directory (with its files and
+eventually sub-directories and other files) to the name2 location.
+In other words, the program makes a *recursive* copy of a directory
+named name1 into a directory named name2 with the same topological
+structure.
+
+
+
+Exercise 02
+-----------
+
+Modify a directory tree while copying it.
+
+A C program is run with two parameters
+name1 name2
+where name1 and name2 are C strings which indicates relative
+or absolute paths of two directory trees.
+
+The program has to copy the directory name1 into a isomorphic
+directory name2 but for each file add two rows at the beginning of the
+file specifying:
+- the first one, the name of the file 
+- the second one specifies the size of the original) files.
+
+
+
+Exercise 03
+-----------
+
+Visit N directory trees with N threads.
+
+A C program is run with N parameters.
+Each parameter indicates a relative or an absolute path to
+a file system directory.
+
+The program has to run N threads (one for each argument).
+Each thread recursively visits one of the directory and
+for each directory entry it prints-out its identifier and
+the directory entry name.
+The main thread awaits for the termination off all threads
+and finally it ends the entire program.
+
+Notice that to avoid merging the outputs of all threads
+on standard output, each thread can store the entry list
+in a file whose name is generated based on the thread identifier.
+
+
+
+Exercise 04
+-----------
+
+Compare directory.
+
+A C program is run with N parameters.
+Each parameter indicates a relative or an absolute path to
+a file system directory tree.
+
+The program has to compare the content of all directories
+to decide whether all directories have the same content or not.
+
+Two directories have the same content *if and only if* all directory
+entries (files and sub-directories) have the same name (excluding the
+path leading to the root, which differ, in general).
+Notice that, it can be supposed that, in case of equivalent directory
+tree, all visits proceed in the same order, i.e., they deliver the
+same entry order.
+
+Upon termination the program has to state whether all directory have
+the same content or not.
+
+Suggestions:
+- The main program run one "reading" thread for each directory tree
+  plus one "comparison" thread 
+- Each "reading" thread visits one of the directory tree
+- For each file/directory found "reading" threads synchronize
+  themselves by activating the "comparison" thread
+- The "comparison" thread compares the name of all entries found.
+  It stops all other threads (and the program) in case the entries are
+  not the same.
+  Otherwise, it returns the control to the "reading" threads.
+
